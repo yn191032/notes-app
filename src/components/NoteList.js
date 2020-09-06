@@ -9,13 +9,11 @@ import {
   IconButton,
   makeStyles,
   Container,
-  Typography,
 } from '@material-ui/core';
 
 import NotesIcon from '@material-ui/icons/Notes';
 import DeleteIcon from '@material-ui/icons/Delete';
 import LockIcon from '@material-ui/icons/Lock';
-import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 
 const useStyles = makeStyles((theme) => ({
   list: {

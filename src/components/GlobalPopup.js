@@ -1,11 +1,9 @@
 import React from 'react';
 import { useGetParam } from '../hooks';
 import { CreateFolder } from './popups/CreateFolder';
-import { CreateKey } from './popups/CreateKey';
 
 const POPUPS = {
   'create-folder': CreateFolder,
-  'create-key': CreateKey,
 };
 
 export const GlobalPopup = () => {

@@ -15,7 +15,6 @@ export const create = async (note) => {
 
   const id = await db.notes.add({ 
     folder: 1,
-    private: false,
     date: Date.now(),
     ...note,
   });

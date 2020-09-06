@@ -11,7 +11,7 @@ class DB extends Dexie {
     super(dbName);
     
     this.version(1).stores({
-      notes: '++id, content, folder, date, private',
+      notes: '++id, content, folder, date',
       folders: '++id, title',
     });
 

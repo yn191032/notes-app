@@ -41,7 +41,6 @@ describe('notes repository', () => {
     expect(newNote.content).toBeDefined();
     expect(newNote.folder).toBeDefined();
     expect(newNote.date).toBeDefined();
-    expect(newNote.private).toBeDefined();
   });
 
   it('should get note by id', async () => {

@@ -18,14 +18,11 @@ import {
 } from '@material-ui/core';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import LockIcon from '@material-ui/icons/Lock';
 import DoneIcon from '@material-ui/icons/Done';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import {
-  Lock,
-  Unlock,
   ChooseFolder
 } from '../components/popups';
 
@@ -101,10 +98,6 @@ export const Editer = () => {
             <span style={{ textTransform: 'none' }}>folder</span>
           </Button>
           <IconButton
-            className={classes.icon} size='small' color='inherit' component={Link} to={`${url}/lock`}>
-            <LockIcon fontSize='small' />
-          </IconButton>
-          <IconButton
             className={classes.icon} size='small' color='inherit'>
             <DeleteIcon fontSize='small' />
           </IconButton>
@@ -137,8 +130,6 @@ export const Editer = () => {
       } />
 
       <Route exact path={`${url}/choose-folder`} component={ChooseFolder}/>
-      <Route exact path={`${url}/unlock`} component={Unlock}/>
-      <Route exact path={`${url}/lock`} component={Lock}/>
     </>
   );
 };
