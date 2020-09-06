@@ -18,8 +18,31 @@ import {
   GlobalPopup 
 } from '../components';
 
+const colors = {
+  primary: '#655DB0',
+  secondary: '#FFE59A',
+};
+
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: colors.primary,
+    },
+    secondary: {
+      main: colors.secondary,
+    },
+  },
   overrides: {
+    MuiListItem: {
+      root: {
+        borderBottom: '1px solid rgba(0,0,0,0.1)',
+        "&$selected": {
+          backgroundColor: 'transparent',
+          color: colors.primary,
+          fontWeight: 600,
+        },
+      },
+    },
     MuiListItemIcon: {
       root: {
         minWidth: 0,
@@ -29,7 +52,7 @@ const theme = createMuiTheme({
     MuiFormControl: {
       root: {
         marginBottom: 16,
-      }
+      },
     }
   }
 });

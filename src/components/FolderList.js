@@ -16,15 +16,9 @@ import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
 
 const useStyles = makeStyles((theme) => ({
   list: {
-    marginBottom: 56,
-    paddingTop: 0,
-    paddingBottom: theme.spacing(2),
+    marginBottom: 47,
   },
-  item: {
-    marginTop: theme.spacing(2),
-    backgroundColor: 'rgba(0, 0, 0, 0.02)',
-    borderRadius: '10px',
-  },
+  item: {},
   folder: {
     display: 'block',
     fontSize: '0.8em',

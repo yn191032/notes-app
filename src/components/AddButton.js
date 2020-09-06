@@ -10,27 +10,26 @@ const useStyles = makeStyles(theme => ({
   container: {
     paddingTop: theme.spacing(2),
   },
-  button: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
-  }
 }));
 
 export const AddButton = ({ title = 'Add', ...restProps }) => {
   const classes = useStyles();
 
   return (
-    <Container 
+    <Container
       className={classes.container}
       fixed
     >
-      <Button 
-        className={classes.button}
-        fullWidth 
+      <Button
+        fullWidth
+        disableElevation
+        color='primary'
+        variant='contained'
         startIcon={<AddIcon />}
         {...restProps}
       >
         { title }
-      </Button> 
+      </Button>
     </Container>
   );
 };

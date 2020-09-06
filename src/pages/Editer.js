@@ -29,9 +29,28 @@ import {
   ChooseFolder
 } from '../components/popups';
 
-const MARKEDTEXT = '# Marked in the browser\n\nRendered by **marked**.';
+const MARKEDTEXT = `
+# Marked in the browser
+\n\nRendered by **marked**. 
+\n\n###About
+\n\nOfnotes is a note taking application that is completely offline with support for live editing markdown and material-design. All notes are stored locally per browser.
+\n\n### Features
+\n\n- **Markdown**: notes support [github flavored markdown](https://github.github.com/gfm/) and are rendered using material design
+\n\n- **Tags**: notes can be tagged to make categorizing and finding them quick and easy
+\n\n- **Indexeddb**: never run out of storage space for notes`;
 
 const useStyles = makeStyles((theme) => ({
+  appbar: {
+    margin: 5,
+    borderRadius: 5,
+    width: 'auto',
+  },
+  icon: {
+    margin: 5
+  },
+  toolbar: {
+    minHeight: 45
+  },
   input: {
     position: 'absolute',
     top: 56,
@@ -40,9 +59,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'baseline',
   },
   folder: {
-    flexGrow: 1, 
-    justifyContent: 'left',
-    marginLeft: 5,
+    flexGrow: 1,
   },
   rendered: {
     width: '100%',
@@ -61,17 +78,19 @@ export const Editer = () => {
 
   return (
     <>
-      <AppBar position='static' color='default' elevation={1}>
-        <Toolbar>
+      <AppBar className={classes.appbar} position='static' color='primary' elevation={0}>
+        <Toolbar className={classes.toolbar}>
           <IconButton 
-            edge='start' 
+            className={classes.icon}
+            size='small'
             color='inherit'
+            edge='start' 
             component={Link} 
             to={`/notes`}
           >
             <ArrowBackIcon />
           </IconButton>
-          <Button 
+          <Button
             className={classes.folder}
             startIcon={<FolderOpenIcon />}
             color='inherit'
@@ -79,15 +98,18 @@ export const Editer = () => {
             component={Link}
             to={`${url}/choose-folder`}
           >
-            folder
+            <span style={{ textTransform: 'none' }}>folder</span>
           </Button>
-          <IconButton color='inherit' component={Link} to={`${url}/lock`}>
+          <IconButton
+            className={classes.icon} size='small' color='inherit' component={Link} to={`${url}/lock`}>
             <LockIcon fontSize='small' />
           </IconButton>
-          <IconButton color='inherit'>
+          <IconButton
+            className={classes.icon} size='small' color='inherit'>
             <DeleteIcon fontSize='small' />
           </IconButton>
-          <IconButton edge='end' color='inherit' onClick={() => {
+          <IconButton
+            className={classes.icon} size='small' edge='end' color='inherit' onClick={() => {
             history.replace(url);
           }}>
             <DoneIcon fontSize='small' />
