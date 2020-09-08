@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { 
   List, 
   ListItem, 
@@ -13,6 +13,7 @@ import {
 
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -24,16 +25,21 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.8em',
     color: 'rgba(0, 0, 0, 0.6)',
   },
+  count: {
+    marginLeft: 8,
+    color: 'rgba(0, 0, 0, 0.4)',
+  },
   date: {
     fontSize: '0.8em',
     color: 'rgba(0, 0, 0, 0.4)',
   },
-  delete: {
+  action: {
     color: 'rgba(0,0,0,0.2)',
   }
 }));
 
 export const FolderList = ({ folders }) => {
+  const { url } = useRouteMatch();
   const classes = useStyles();
 
   return(
@@ -52,11 +58,21 @@ export const FolderList = ({ folders }) => {
                 <FolderOpenIcon fontSize='small' />
               </ListItemIcon>
               <ListItemText 
-                primary={folder.title}
+                primary={
+                  <>
+                    {folder.title}
+                    <small className={classes.count}>
+                      {folder.count}
+                    </small>
+                  </>
+                }
               />
               <ListItemSecondaryAction>
+                <IconButton component={Link} to={`${url}?popup=rename-folder`}>
+                  <EditIcon fontSize='small' className={classes.action} />
+                </IconButton>
                 <IconButton>
-                  <DeleteSweepIcon fontSize='small' className={classes.delete} />
+                  <DeleteSweepIcon fontSize='small' className={classes.action} />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>

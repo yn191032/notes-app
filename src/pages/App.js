@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { 
-  Switch, 
-  Route, 
+import {
+  Switch,
+  Route,
   Redirect,
   BrowserRouter,
 } from 'react-router-dom';
@@ -15,8 +15,11 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import { 
   Layout, 
-  GlobalPopup 
+  GlobalPopup, 
+  Undo
 } from '../components';
+
+import { UndoProvider } from '../hooks';
 
 const colors = {
   primary: '#655DB0',
@@ -33,6 +36,12 @@ const theme = createMuiTheme({
     },
   },
   overrides: {
+    MuiSnackbarContent: {
+      message: { 
+        display: 'flex',
+        alignItems: 'center',
+      },
+    },
     MuiListItem: {
       root: {
         borderBottom: '1px solid rgba(0,0,0,0.1)',
@@ -60,22 +69,25 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Layout>
-          <Switch>
-            <Route path='/notes/new' component={Editer} />
-            <Route path='/notes/:id' component={Editer} />
-            
-            <Route path='/notes/folder/:id' component={Notes} />
-            <Route path='/notes' component={Notes} />
-            
-            <Route exact path='/folders' component={Folders} />
+      <UndoProvider>
+        <BrowserRouter>
+          <Layout>
+            <Switch>
+              <Route path='/notes/new' component={Editer} />
+              <Route path='/notes/:id' component={Editer} />
+              
+              <Route path='/notes/folder/:id' component={Notes} />
+              <Route path='/notes' component={Notes} />
+              
+              <Route exact path='/folders' component={Folders} />
 
-            <Redirect to='/notes/new' />
-          </Switch>
-          <GlobalPopup />
-        </Layout>
-      </BrowserRouter>
+              <Redirect to='/notes/new' />
+            </Switch>
+            <GlobalPopup />
+            <Undo />
+          </Layout>
+        </BrowserRouter>
+      </UndoProvider>
     </ThemeProvider>
   );
 }

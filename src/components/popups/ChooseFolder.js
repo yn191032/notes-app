@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { 
   List,
@@ -15,21 +15,27 @@ import AddIcon from '@material-ui/icons/Add';
 
 import { PopupBase } from './PopupBase';
 import FOLDERS from '../../data/folders';
+import { useMakeLink } from '../../hooks';
 
-export const ChooseFolder = ({ match }) => {
+export const ChooseFolder = ({ open }) => {
+  const { pathname } = useLocation();
+  console.log(useMakeLink({ 
+    to: '/here',
+  }));
+  
   return (
-    <PopupBase open={Boolean(match)} title='Choose a folder'>
-      <Button 
-        fullWidth 
+    <PopupBase open={open} title='Choose a folder'>
+      <Button
+        fullWidth
         color='primary'
         variant='contained'
         disableElevation
         startIcon={<AddIcon />}
-        component={Link} 
-        to={`${match.url}?popup=create-folder`}
+        component={Link}
+        to={`${pathname}?popup=create-folder`}
       >
         New
-      </Button> 
+      </Button>
       <List>
         {
           FOLDERS.map(folder => (

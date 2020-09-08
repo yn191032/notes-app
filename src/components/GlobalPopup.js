@@ -1,9 +1,13 @@
 import React from 'react';
 import { useGetParam } from '../hooks';
 import { CreateFolder } from './popups/CreateFolder';
+import { RenameFolder } from './popups/RenameFolder';
+import { ChooseFolder } from './popups';
 
 const POPUPS = {
   'create-folder': CreateFolder,
+  'rename-folder': RenameFolder,
+  'choose-folder': ChooseFolder,
 };
 
 export const GlobalPopup = () => {

@@ -22,9 +22,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import {
-  ChooseFolder
-} from '../components/popups';
+import { useMakeLink } from '../hooks';
 
 const MARKEDTEXT = `
 # Marked in the browser
@@ -72,6 +70,14 @@ export const Editer = () => {
   const classes = useStyles();
   const history = useHistory();
   const { url } = useRouteMatch();
+  const link = useMakeLink({
+    to: '/here',
+    isRelative: true,
+    pushToQuery: {
+      'ppppdp': 1
+    }
+  });
+  console.log(link);
 
   return (
     <>
@@ -93,12 +99,16 @@ export const Editer = () => {
             color='inherit'
             size='small'
             component={Link}
-            to={`${url}/choose-folder`}
+            to={`${url}?popup=choose-folder`}
           >
             <span style={{ textTransform: 'none' }}>folder</span>
           </Button>
           <IconButton
-            className={classes.icon} size='small' color='inherit'>
+            className={classes.icon}
+            size='small'
+            color='inherit'
+            onClick={f=>f}
+          >
             <DeleteIcon fontSize='small' />
           </IconButton>
           <IconButton
@@ -128,8 +138,6 @@ export const Editer = () => {
           <ReactMarkdown source={MARKEDTEXT} />
         </div>
       } />
-
-      <Route exact path={`${url}/choose-folder`} component={ChooseFolder}/>
     </>
   );
 };
