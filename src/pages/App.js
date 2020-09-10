@@ -16,7 +16,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { 
   Layout, 
   GlobalPopup, 
-  Undo
+  UndoList
 } from '../components';
 
 import { UndoProvider } from '../hooks';
@@ -40,6 +40,7 @@ const theme = createMuiTheme({
       message: { 
         display: 'flex',
         alignItems: 'center',
+        padding: 0,
       },
     },
     MuiListItem: {
@@ -84,7 +85,7 @@ function App() {
               <Redirect to='/notes/new' />
             </Switch>
             <GlobalPopup />
-            <Undo />
+            <UndoList />
           </Layout>
         </BrowserRouter>
       </UndoProvider>

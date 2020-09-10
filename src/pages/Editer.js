@@ -22,7 +22,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { useMakeLink } from '../hooks';
+import { useMakeLink, useUndo } from '../hooks';
 
 const MARKEDTEXT = `
 # Marked in the browser
@@ -70,14 +70,11 @@ export const Editer = () => {
   const classes = useStyles();
   const history = useHistory();
   const { url } = useRouteMatch();
-  const link = useMakeLink({
-    to: '/here',
-    isRelative: true,
-    pushToQuery: {
-      'ppppdp': 1
-    }
+  const { push, getAll } = useUndo();
+
+  React.useEffect(() => {
+    console.log('undos', getAll());
   });
-  console.log(link);
 
   return (
     <>
@@ -107,7 +104,10 @@ export const Editer = () => {
             className={classes.icon}
             size='small'
             color='inherit'
-            onClick={f=>f}
+            onClick={() => push({
+              cb: () => console.log('test'),
+              message: 'Test message',
+            })}
           >
             <DeleteIcon fontSize='small' />
           </IconButton>

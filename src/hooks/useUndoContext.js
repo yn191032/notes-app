@@ -9,36 +9,50 @@ import React, {
 const UndoContext = createContext();
 
 export const UndoProvider = ({ children }) => {
-  const undosRef = useRef([]);
-  const [undo, setUndo] = useState(0);
-  
-  useEffect(() => {
-    if (undo){
-      undosRef.current = [
-        ...undosRef.current,
-        undo,
-      ];
-    }
-  }, [undo]);
+  const [undos, setUndos] = useState([]);
 
-  const cancel = (undo) => {
-    undosRef.current.filter((value) => value === undo);
+  const removeFromUndos = (timerId) => {
+    setUndos(prev => {
+      return prev.filter(undo => undo.id !== timerId);
+    });
   };
-  
-  const fire = (undo) => {
-    undo.cb();
-    cancel();
-  };
-  
+
   const push = (newUndo) => {
-    if (!newUndo) {
-      throw new Error('useUndo.push: {message, cb} param is necessary');
-    }
-    setUndo(newUndo);
+    const timerDelay = 3000;
+    const animationDelay = 300;
+    const startTimeMS = (new Date()).getTime();
+
+    const timerId = setTimeout(() => {
+      newUndo.cb();
+      removeFromUndos(timerId);
+    }, timerDelay + animationDelay);
+
+    const cancel = () => {
+      clearTimeout(timerId);
+      removeFromUndos(timerId);
+    };
+
+    const percentage = (partialValue, totalValue) => {
+      return Math.round((100 * partialValue) / totalValue);
+   }
+
+    const getProgress = () => {
+      const remainingTime = timerDelay - ((new Date()).getTime() - startTimeMS);
+      return percentage(timerDelay - remainingTime, timerDelay);
+    };
+
+    const undo = {
+      message: newUndo.message,
+      id: timerId,
+      cancel,
+      getProgress,
+    };
+
+    setUndos(prev => [...prev, undo]);
   };
 
   const getAll = () => {
-    return undosRef.current;
+    return undos;
   };
 
   return (
