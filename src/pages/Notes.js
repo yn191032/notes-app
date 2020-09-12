@@ -1,20 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import { NoteList, BottomNav, AddButton } from '../components';
-
-import NOTES from '../data/notes';
+import { NoteList, FolderList, AddButton } from '../components';
+import { useNotes, useFolders } from '../hooks';
 
 export const Notes = () => {
+  const { folderId } = useParams();
+  const { folders } = useFolders();
+  const { notes , removeNote } = useNotes(folderId);
+
   return (
     <>
-      <AddButton 
-        title='Add a note'
-        component={Link}
-        to='/notes/new'
-      />
-      <NoteList notes={NOTES} />
-      <BottomNav />
+      <FolderList folders={folders} />
+      <NoteList notes={notes} onRemove={removeNote} />
+      <AddButton />
     </>
   );
 };

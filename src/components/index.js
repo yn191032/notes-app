@@ -1,4 +1,3 @@
-export * from './BottomNav';
 export * from './AddButton';
 export * from './NoteList';
 export * from './FolderList';

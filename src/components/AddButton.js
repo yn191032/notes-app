@@ -1,35 +1,33 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { 
-  Button, makeStyles, Container 
+  makeStyles, 
+  Fab,
 } from '@material-ui/core';
 
 import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    paddingTop: theme.spacing(2),
+  button: {
+    position: 'fixed',
+    zIndex: theme.zIndex.appBar,
+    right: theme.spacing(2),
+    bottom: theme.spacing(2),
   },
 }));
 
-export const AddButton = ({ title = 'Add', ...restProps }) => {
+export const AddButton = () => {
   const classes = useStyles();
 
   return (
-    <Container
-      className={classes.container}
-      fixed
+    <Fab 
+      color="primary" 
+      className={classes.button}
+      component={Link}
+      to='/notes/new'
     >
-      <Button
-        fullWidth
-        disableElevation
-        color='primary'
-        variant='contained'
-        startIcon={<AddIcon />}
-        {...restProps}
-      >
-        { title }
-      </Button>
-    </Container>
+      <AddIcon />
+    </Fab> 
   );
 };

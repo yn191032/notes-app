@@ -7,9 +7,7 @@ import {
   BrowserRouter,
 } from 'react-router-dom';
 
-import { Notes } from './Notes';
-import { Folders } from './Folders';
-import { Editer } from './Editer';
+import { Notes, Editer, NewNote } from './index';
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
@@ -22,8 +20,8 @@ import {
 import { UndoProvider } from '../hooks';
 
 const colors = {
-  primary: '#655DB0',
-  secondary: '#FFE59A',
+  primary: '#5e71d0',
+  secondary: '#bf4e4e',
 };
 
 const theme = createMuiTheme({
@@ -43,9 +41,20 @@ const theme = createMuiTheme({
         padding: 0,
       },
     },
+    MuiMenu: {
+      list: {
+        padding: 0,
+      }
+    },
+    MuiMenuItem: {
+      root: {
+        paddingTop: 0,
+        paddingBottom: 0,
+        minHeight: 44,
+      }
+    },
     MuiListItem: {
       root: {
-        borderBottom: '1px solid rgba(0,0,0,0.1)',
         "&$selected": {
           backgroundColor: 'transparent',
           color: colors.primary,
@@ -74,15 +83,16 @@ function App() {
         <BrowserRouter>
           <Layout>
             <Switch>
-              <Route path='/notes/new' component={Editer} />
-              <Route path='/notes/:id' component={Editer} />
-              
-              <Route path='/notes/folder/:id' component={Notes} />
+              <Route exact path='/'>
+                <Redirect to='/notes' />
+                <Redirect to='/notes/new' />
+              </Route>
+              <Route path='/notes/folder/:folderId' component={Notes} />
+              <Route path='/notes/new' component={NewNote} />
+              <Route path='/notes/:noteId' component={Editer} />
               <Route path='/notes' component={Notes} />
-              
-              <Route exact path='/folders' component={Folders} />
 
-              <Redirect to='/notes/new' />
+              <Redirect to='/' />
             </Switch>
             <GlobalPopup />
             <UndoList />

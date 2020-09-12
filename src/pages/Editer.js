@@ -3,7 +3,8 @@ import {
   Route, 
   Link, 
   useHistory,
-  useRouteMatch
+  useRouteMatch, 
+  useParams
 } from 'react-router-dom';
 
 import ReactMarkdown from 'react-markdown';
@@ -18,28 +19,13 @@ import {
 } from '@material-ui/core';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import DoneIcon from '@material-ui/icons/Done';
-import FolderOpenIcon from '@material-ui/icons/FolderOpen';
+import FolderIcon from '@material-ui/icons/Folder';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
-import { useMakeLink, useUndo } from '../hooks';
-
-const MARKEDTEXT = `
-# Marked in the browser
-\n\nRendered by **marked**. 
-\n\n###About
-\n\nOfnotes is a note taking application that is completely offline with support for live editing markdown and material-design. All notes are stored locally per browser.
-\n\n### Features
-\n\n- **Markdown**: notes support [github flavored markdown](https://github.github.com/gfm/) and are rendered using material design
-\n\n- **Tags**: notes can be tagged to make categorizing and finding them quick and easy
-\n\n- **Indexeddb**: never run out of storage space for notes`;
+import { useMakeLink, useNote } from '../hooks';
 
 const useStyles = makeStyles((theme) => ({
-  appbar: {
-    margin: 5,
-    borderRadius: 5,
-    width: 'auto',
-  },
   icon: {
     margin: 5
   },
@@ -54,7 +40,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'baseline',
   },
   folder: {
-    flexGrow: 1,
+    margin: 5,
+    marginLeft: 'auto',
   },
   rendered: {
     width: '100%',
@@ -70,16 +57,18 @@ export const Editer = () => {
   const classes = useStyles();
   const history = useHistory();
   const { url } = useRouteMatch();
-  const { push, getAll } = useUndo();
-
-  React.useEffect(() => {
-    console.log('undos', getAll());
-  });
+  const { noteId } = useParams();
+  const { note } = useNote(noteId);
 
   return (
     <>
-      <AppBar className={classes.appbar} position='static' color='primary' elevation={0}>
+      <AppBar 
+        position='static' 
+        color='default' 
+        elevation={0}
+      >
         <Toolbar className={classes.toolbar}>
+
           <IconButton 
             className={classes.icon}
             size='small'
@@ -90,53 +79,66 @@ export const Editer = () => {
           >
             <ArrowBackIcon />
           </IconButton>
+
           <Button
             className={classes.folder}
-            startIcon={<FolderOpenIcon />}
+            endIcon={<FolderIcon />}
             color='inherit'
             size='small'
             component={Link}
-            to={`${url}?popup=choose-folder`}
+            to={useMakeLink({queryToPush: {
+              popup: 'choose-folder'
+            }})}
           >
-            <span style={{ textTransform: 'none' }}>folder</span>
+            <span style={{ textTransform: 'none' }}>{note.folder}</span>
           </Button>
+
           <IconButton
             className={classes.icon}
             size='small'
             color='inherit'
-            onClick={() => push({
-              cb: () => console.log('test'),
-              message: 'Test message',
-            })}
+            // onClick={() => push({
+            //   cb: () => console.log('test'),
+            //   message: 'Test message',
+            // })}
           >
             <DeleteIcon fontSize='small' />
           </IconButton>
+
           <IconButton
-            className={classes.icon} size='small' edge='end' color='inherit' onClick={() => {
-            history.replace(url);
-          }}>
-            <DoneIcon fontSize='small' />
+            className={classes.icon} 
+            size='small' 
+            edge='end' 
+            color='inherit' 
+            onClick={() => {
+              history.replace(url);
+            }}
+          >
+            <CheckCircleIcon fontSize='small' />
           </IconButton>
+
         </Toolbar>
       </AppBar>
 
       <Route path={`${url}/edit`} children={({ match }) => 
-        Boolean(match) ? 
-        <form>
-          <Input 
-            value={MARKEDTEXT}
-            className={classes.input}
-            placeholder='type something...'
-            fullWidth
-            multiline
-          />
-        </form>
-        :
-        <div className={classes.rendered} onClick={() => {
-          history.push(`${url}/edit`);
-        }}>
-          <ReactMarkdown source={MARKEDTEXT} />
-        </div>
+        Boolean(match) 
+        ? <form>
+            <Input 
+              value={note.content}
+              className={classes.input}
+              placeholder='type something...'
+              fullWidth
+              multiline
+            />
+          </form>
+        : <div 
+            className={classes.rendered} 
+            onClick={() => {
+              history.push(`${url}/edit`);
+            }}
+          >
+            <ReactMarkdown source={note.content} />
+          </div>
       } />
     </>
   );

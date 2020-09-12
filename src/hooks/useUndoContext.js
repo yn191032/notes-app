@@ -1,7 +1,5 @@
 import React, { 
   useState, 
-  useEffect, 
-  useRef, 
   useContext,
   createContext, 
 } from "react";
@@ -23,11 +21,12 @@ export const UndoProvider = ({ children }) => {
     const startTimeMS = (new Date()).getTime();
 
     const timerId = setTimeout(() => {
-      newUndo.cb();
+      newUndo.onDo();
       removeFromUndos(timerId);
     }, timerDelay + animationDelay);
 
     const cancel = () => {
+      newUndo.onUndo();
       clearTimeout(timerId);
       removeFromUndos(timerId);
     };

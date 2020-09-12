@@ -16,9 +16,20 @@ export const create = async (folder) => {
 };
 
 export const list = async () => {
-  return await db.folders
-    .reverse()
+  const notes = await db.notes
     .toArray();
+  const folders = await db.folders
+    // .reverse()
+    .toArray();
+
+  const countNotes = (folderId) => {
+    return notes.filter(note => note.folder === folderId).length;
+  };
+
+  return folders.map(folder => ({
+    ...folder,
+    count: countNotes(folder.id)
+  }));
 };
 
 export const remove = async (folderId) => {

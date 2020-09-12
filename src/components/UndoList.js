@@ -33,21 +33,6 @@ const useStyles = makeStyles({
   },
 });
 
-const UNDOS = [
-  {
-    message: 'Item deleted.',
-    id: 1,
-    cancel: () => console.log('canceled'),
-    getProgress: () => 95,
-  },
-  {
-    message: 'Folder deleted.',
-    id: 2,
-    cancel: () => console.log('canceled'),
-    getProgress: () => 60,
-  }
-];
-
 export const Undo = ({ message, cancelAction, getProgress }) => {
   const classes = useStyles();
   const timerRef = React.useRef();
@@ -71,11 +56,10 @@ export const Undo = ({ message, cancelAction, getProgress }) => {
         setOpen(false);
       } else {
         setProgress(currentProgress);
-        console.log(currentProgress);
       }
     }, 100);
     return () => clearInterval(timerRef.current);
-  }, []);
+  }, [getProgress]);
 
   return (
     <Snackbar
@@ -85,7 +69,7 @@ export const Undo = ({ message, cancelAction, getProgress }) => {
         <>
           <CircularProgress
             className={classes.progress}
-            color='secondary'
+            color='primary'
             variant="static"
             size={20}
             thickness={4}
@@ -97,7 +81,7 @@ export const Undo = ({ message, cancelAction, getProgress }) => {
       action={
         <>
           <Button 
-            color="secondary" 
+            color="primary" 
             size="small" 
             onClick={onClickUndo}
           >

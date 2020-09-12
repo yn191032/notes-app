@@ -1,4 +1,5 @@
 import Dexie from 'dexie';
+import moment from 'moment';
 
 import initFolders from '../data/folders';
 import initNotes from '../data/notes';
@@ -19,7 +20,11 @@ class DB extends Dexie {
     this.folders = this.table('folders');
 
     this.on('populate', () => {
-      this.notes.add(firstNote);
+      this.notes.add({
+        ...firstNote,
+        folder: 1,
+        date: moment().format(),
+      });
       this.notes.bulkAdd(initNotes);
 
       this.folders.add(defaultFolder);
