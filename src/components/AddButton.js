@@ -12,8 +12,8 @@ const useStyles = makeStyles(theme => ({
   button: {
     position: 'fixed',
     zIndex: theme.zIndex.appBar,
-    right: theme.spacing(2),
-    bottom: theme.spacing(2),
+    right: 35,
+    bottom: 35,
   },
 }));
 

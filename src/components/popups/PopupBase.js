@@ -5,13 +5,9 @@ import {
   Dialog,
   Slide,
   Container,
-  IconButton,
-  DialogTitle,
   DialogContent,
   makeStyles
 } from '@material-ui/core';
-
-import CloseIcon from '@material-ui/icons/Close';
 
 const Transition = React.forwardRef((props, ref) => 
   <Slide direction='up' ref={ref} {...props} />
@@ -24,6 +20,7 @@ const useStyles = makeStyles(() => ({
   popupContent: {
     display: 'flex',
     alignItems: 'center',
+    padding: '40px 20px !important',
   },
 }));
 
@@ -33,12 +30,12 @@ export const PopupBase = ({ open, title, children }) => {
 
   return (
     <Dialog
-      fullScreen
+      // fullScreen
       open={open}
       onClose={history.goBack}
       TransitionComponent={Transition}
     >
-      <DialogTitle className={classes.popupTitle}>
+      {/* <DialogTitle className={classes.popupTitle}>
         <IconButton
           edge='start'
           color='inherit'
@@ -46,10 +43,10 @@ export const PopupBase = ({ open, title, children }) => {
         >
           <CloseIcon />
         </IconButton>
-      </DialogTitle>
+      </DialogTitle> */}
       <DialogContent className={classes.popupContent}>
         <Container>
-          <h2 className={classes.title}>{ title }</h2>
+          {/* <h3 className={classes.title}>{ title }</h3> */}
           { children }
         </Container>
       </DialogContent>

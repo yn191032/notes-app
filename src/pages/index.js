@@ -1,3 +1,2 @@
-export * from './Editer';
+export * from './Editor';
 export * from './Notes';
-export * from './NewNote';

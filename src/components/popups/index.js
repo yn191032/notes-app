@@ -1,2 +1,1 @@
-export * from './CreateFolder';
-export * from './ChooseFolder';
+export * from './Popups';

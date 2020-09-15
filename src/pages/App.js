@@ -7,17 +7,17 @@ import {
   BrowserRouter,
 } from 'react-router-dom';
 
-import { Notes, Editer, NewNote } from './index';
+import { Notes, Editor } from './index';
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import { 
   Layout, 
-  GlobalPopup, 
+  Popups, 
   UndoList
 } from '../components';
 
-import { UndoProvider } from '../hooks';
+import { UndoProvider, NoteProvider } from '../hooks';
 
 const colors = {
   primary: '#5e71d0',
@@ -80,24 +80,26 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <UndoProvider>
-        <BrowserRouter>
-          <Layout>
-            <Switch>
-              <Route exact path='/'>
-                <Redirect to='/notes' />
-                <Redirect to='/notes/new' />
-              </Route>
-              <Route path='/notes/folder/:folderId' component={Notes} />
-              <Route path='/notes/new' component={NewNote} />
-              <Route path='/notes/:noteId' component={Editer} />
-              <Route path='/notes' component={Notes} />
+        <NoteProvider>
+          <BrowserRouter>
+            <Layout>
+              <Switch>
+                <Route exact path='/'>
+                  <Redirect to='/notes' />
+                  <Redirect to='/notes/new' />
+                </Route>
+                <Route path='/notes/folder/:folderId' component={Notes} />
+                <Route path='/notes/new' component={Editor} />
+                <Route path='/notes/:noteId' component={Editor} />
+                <Route path='/notes' component={Notes} />
 
-              <Redirect to='/' />
-            </Switch>
-            <GlobalPopup />
-            <UndoList />
-          </Layout>
-        </BrowserRouter>
+                <Redirect to='/' />
+              </Switch>
+              <Popups />
+              <UndoList />
+            </Layout>
+          </BrowserRouter>
+        </NoteProvider>
       </UndoProvider>
     </ThemeProvider>
   );

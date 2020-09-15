@@ -2,12 +2,11 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { NoteList, FolderList, AddButton } from '../components';
-import { useNotes, useFolders } from '../hooks';
+import { useNotesList } from '../hooks';
 
 export const Notes = () => {
   const { folderId } = useParams();
-  const { folders } = useFolders();
-  const { notes , removeNote } = useNotes(folderId);
+  const { notes, folders, removeNote } = useNotesList(folderId);
 
   return (
     <>

@@ -15,7 +15,7 @@ export const UndoProvider = ({ children }) => {
     });
   };
 
-  const push = (newUndo) => {
+  const makeUndo = (newUndo) => {
     const timerDelay = 3000;
     const animationDelay = 300;
     const startTimeMS = (new Date()).getTime();
@@ -58,7 +58,7 @@ export const UndoProvider = ({ children }) => {
     <UndoContext.Provider 
       children={children}
       value={{
-        push,
+        makeUndo,
         getAll,
       }}
     />

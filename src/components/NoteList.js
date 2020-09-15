@@ -14,6 +14,10 @@ import {
 
 import NotesIcon from '@material-ui/icons/Notes';
 import DeleteIcon from '@material-ui/icons/Delete';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+
+import { FormatDate } from './FomatDate';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -56,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'uppercase',
     color: 'rgba(0, 0, 0, 0.3)',
   },
+  bookIcon: {
+    width: 12,
+    height: 12
+  },
 }));
 
 export const NoteList = ({ notes, onRemove }) => {
@@ -82,16 +90,22 @@ export const NoteList = ({ notes, onRemove }) => {
                 primary={
                   <span>
                     <span className={classes.folder}>
-                      {note.folder}
+                      {note.folder !== 'default'
+                        ? <><BookmarkIcon fontSize='small' className={classes.bookIcon} /> {note.folder}</> 
+                        : <><BookmarkBorderIcon fontSize='small' className={classes.bookIcon} /> {note.folder}</>
+                      }
                     </span>
                     <span className={classes.title}>
-                      {`${note.content.substr(0,12)}...`}
+                      {note.content.length >= 20
+                        ? `${note.content.substr(0,20)}...`
+                        : note.content.substr(0,20)
+                      }
                     </span>
                   </span>
                 }
                 secondary={
                   <span className={classes.date}>
-                    {note.date}
+                    <FormatDate date={note.date} />
                   </span>
                 }
               />

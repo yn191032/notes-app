@@ -1,9 +1,5 @@
-import * as notes from './models/Note';
-import * as folders from './models/Folder';
+import * as notes from './Note';
 
-export const repo = {
-  notes,
-  folders,
+export default {
+  notes
 };
-
-export * from './db';
