@@ -6,6 +6,7 @@ This is a note taking application that is completely offline with support for li
 
 ### Features
 
+- **Autosave**: notes autosaves on input
 - **Markdown**: notes support markdown and are rendered using material design
 - **Folders**: notes can be tagged to make categorizing and finding them quick and easy
 - **Indexeddb**: never run out of storage space for notes
