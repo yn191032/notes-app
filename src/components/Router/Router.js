@@ -4,7 +4,7 @@ import {
   Switch,
   Route,
   Redirect,
-  BrowserRouter,
+  HashRouter,
 } from 'react-router-dom';
 
 import { 
@@ -17,7 +17,7 @@ import { Notes, Editor } from 'screens';
 
 export const Router = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Layout>
         <Switch>
           <Route exact path='/'>
@@ -33,6 +33,6 @@ export const Router = () => {
         <Popup />
         <Undo />
       </Layout>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
